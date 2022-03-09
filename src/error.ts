@@ -198,6 +198,21 @@ export class MongoDriverError extends MongoError {
 }
 
 /**
+ * An error during the handshake.
+ *
+ * @public
+ * @category Error
+ */
+export class MongoHandshakeError extends MongoError {
+  constructor(message: string) {
+    super(message);
+  }
+
+  get name(): string {
+    return 'MongoHandshakeError';
+  }
+}
+/**
  * An error generated when the driver API is used incorrectly
  *
  * @privateRemarks
@@ -738,7 +753,8 @@ export function isRetryableError(error: MongoError): boolean {
     (typeof error.code === 'number' && RETRYABLE_ERROR_CODES.has(error.code!)) ||
     error instanceof MongoNetworkError ||
     !!error.message.match(new RegExp(LEGACY_NOT_WRITABLE_PRIMARY_ERROR_MESSAGE)) ||
-    !!error.message.match(new RegExp(NODE_IS_RECOVERING_ERROR_MESSAGE))
+    !!error.message.match(new RegExp(NODE_IS_RECOVERING_ERROR_MESSAGE)) ||
+    error instanceof MongoHandshakeError
   );
 }
 
