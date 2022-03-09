@@ -276,6 +276,7 @@ export type {
   AlternativeType,
   ArrayOperator,
   BitwiseFilter,
+  BSONLike,
   BSONTypeAlias,
   Condition,
   EnhancedOmit,

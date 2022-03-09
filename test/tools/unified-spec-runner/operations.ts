@@ -173,7 +173,8 @@ operations.set('assertNumberConnectionsCheckedOut', async ({ entities, operation
 
 operations.set('bulkWrite', async ({ entities, operation }) => {
   const collection = entities.getEntity('collection', operation.object);
-  return collection.bulkWrite(operation.arguments.requests);
+  const { requests, ...opts } = operation.arguments;
+  return collection.bulkWrite(requests, opts);
 });
 
 // The entity exists for the name but can potentially have the wrong
@@ -205,7 +206,8 @@ operations.set('createChangeStream', async ({ entities, operation }) => {
     resumeAfter: operation.arguments.resumeAfter,
     startAfter: operation.arguments.startAfter,
     startAtOperationTime: operation.arguments.startAtOperationTime,
-    batchSize: operation.arguments.batchSize
+    batchSize: operation.arguments.batchSize,
+    comment: operation.arguments.comment
   });
   changeStream.eventCollector = new EventCollector(changeStream, ['init', 'change', 'error']);
 

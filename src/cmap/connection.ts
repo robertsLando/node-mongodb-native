@@ -572,6 +572,10 @@ export class Connection extends TypedEventEmitter<ConnectionEvents> {
       getMoreCmd.maxTimeMS = options.maxAwaitTimeMS;
     }
 
+    if (options.comment) {
+      getMoreCmd.comment = options.comment;
+    }
+
     const commandOptions = Object.assign(
       {
         returnFieldSelector: null,
